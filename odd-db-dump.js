@@ -1,3 +1,11 @@
+// Odd DB Dump
+// A simple script to dump the collection and video data from an existing
+// Oddworks server instance. Includes virtually no safety net, error checks
+// or methods of recovery. Use at your own risk. Having said that the worst
+// it can probably do is write a bunch of json to your hard drive
+//
+// v1.0.0 pbm 4/21/16
+
 'use strict';
 
 const https = require('https');
@@ -10,13 +18,6 @@ function verifyDirExists(dir) {
 		fs.mkdirSync(dir);
 		return fs.existsSync(dir);
 	}
-	// if (fs.existsSync(dir)) {
-	// 	return true;
-	// } else {
-	// 	console.log('creating folder: ' + dir);
-	// 	fs.mkdirSync(dir);
-	// 	return fs.existsSync(dir);
-	// }
 }
 
 function write(data, path) {
@@ -68,9 +69,12 @@ function fetchData(type) {
 		'User-Agent': 'tvOS',
 		'Content-Type': 'application/json',
 		'Accept': 'application/json',
-		'x-access-token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXJzaW9uIjoxLCJkZXZpY2VJRCI6IjQ1NDc5MjYwLWM1NDItMTFlNS1hN2QzLWI5YzYxY2MyZDU1MiIsInNjb3BlIjpbImRldmljZSJdLCJpYXQiOjE0NTM5MzI0MTJ9.DWh9Y6baI6I2ThAxX5zgnHsiV7kQmWJhZXgkw42RKtU'
+		'x-access-token': '<the access token requried for your server>'
 	}
 
+	// the host name should be the root to your server
+	// path should be the base path for the route to query for objects
+	// adjust accordingly
 	var options = {
 		hostname: 'beta.oddworks.io',
 		port: 443,
@@ -87,7 +91,7 @@ function fetchData(type) {
 				theJSON += chunk;
 			});
 
-			response.on('end', function() {
+			response.on('end', function () {
 				console.log('writing to file...');
 				parseData(theJSON);
 			});
@@ -101,7 +105,9 @@ function fetchData(type) {
 	});
 }
 
-
+// start by creating a root data folder in the current directory
+// then write all the video and collection data with the data folder
+// should work for other assets as well. not tested beyond video/collection
 fs.mkdirSync(`${rootPath}/data/`);
 fetchData('videos');
 fetchData('collections');
