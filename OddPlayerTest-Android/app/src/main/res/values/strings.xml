@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">OddPlayerTest</string>
+    <string name="title_activity_video_player">VideoPlayerActivity</string>
+</resources>
