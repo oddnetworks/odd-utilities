@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.google.android.exoplayer.util.Util;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText urlEditText;
     private Button playButton;
     private Button exoButton;
+    private CheckBox hlsCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         urlEditText = (EditText) findViewById(R.id.url_editText);
         playButton = (Button) findViewById(R.id.play_button);
 
-        urlEditText.setText("http://www.sample-videos.com/video/mp4/240/big_buck_bunny_240p_1mb.mp4", null);
+        //urlEditText.setText("http://www.sample-videos.com/video/mp4/240/big_buck_bunny_240p_1mb.mp4", null);
 
         urlEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,10 +83,13 @@ public class MainActivity extends AppCompatActivity {
         if (playerType == PlayerType.NATIVE) {
             videoPlayerIntent.putExtra("url", url);
         } else {
+            hlsCheckBox = (CheckBox) findViewById(R.id.hlsCheckBox);
+            int mediaType = hlsCheckBox.isChecked() ? Util.TYPE_HLS : Util.TYPE_OTHER;
+
             videoPlayerIntent = new Intent(MainActivity.this, ExoPlayerActivity.class)
                 .setData(Uri.parse(url))
                 .putExtra(ExoPlayerActivity.CONTENT_ID_EXTRA, "contentId")
-                .putExtra(ExoPlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
+                .putExtra(ExoPlayerActivity.CONTENT_TYPE_EXTRA, mediaType)
                 .putExtra(ExoPlayerActivity.PROVIDER_EXTRA, "provider");
         }
 

@@ -40,4 +40,27 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:enabled="false"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HLS"
+        android:id="@+id/hlsCheckBox"
+        android:layout_below="@+id/exo_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:checked="false"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="For the EXO Player select HLS for m3u8 files"
+        android:id="@+id/textView"
+        android:layout_below="@+id/hlsCheckBox"
+        android:layout_alignRight="@+id/hlsCheckBox"
+        android:layout_alignEnd="@+id/hlsCheckBox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center"/>
+
 </RelativeLayout>
